@@ -10,7 +10,8 @@ namespaces = filter tfplan.resource_changes as _, rc {
 # Check that each namespace has at least one label
 namespace_has_labels = rule {
     all namespaces as _, ns {
-        length(ns.change.after.metadata[0].labels else {}) > 0
+        labels = ns.change.after.labels
+        labels is not null and length(labels) > 0
     }
 }
 
